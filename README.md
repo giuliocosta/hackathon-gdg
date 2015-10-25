@@ -1,4 +1,4 @@
-# hackathon gdgbh
+# HACKATON GdgBh
 
 ## Qual problema?
 
