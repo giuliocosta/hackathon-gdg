@@ -17,9 +17,9 @@ Google Cloud(AppEngnine, Datastore, Endpoints),
 Android.
 
 ## Equipe?
-Eduardo Gomes Filho
-Giulio Costa
-Bruno Hauck
-Luis Guadagnin
+Eduardo Gomes Filho,
+Giulio Costa,
+Bruno Hauck,
+Luis Guadagnin.
 
 
