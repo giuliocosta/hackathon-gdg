@@ -1,8 +1,5 @@
 package places;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.Named;
@@ -10,6 +7,9 @@ import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.InternalServerErrorException;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.appengine.api.oauth.OAuthRequestException;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 import Model.LocationResults;
 import constants.Constants;
@@ -25,10 +25,9 @@ public class PlacesEndpoint {
 	}
 
 	@ApiMethod(name = "addLocation", path = "locations", httpMethod = "post")
-	public String addLocation(@Named("lat") String lat, @Named("lng") String lng)
+	public void addLocation(@Named("lat") String lat, @Named("lng") String lng)
 			throws InternalServerErrorException, BadRequestException, IOException, GeneralSecurityException {
 		searchService.storeLocation(Double.parseDouble(lat), Double.parseDouble(lng));
-		return "Ok";
 	}
 
 }
