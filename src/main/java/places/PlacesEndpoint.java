@@ -8,20 +8,27 @@ import com.google.api.server.spi.response.InternalServerErrorException;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.appengine.api.oauth.OAuthRequestException;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Map;
 
 import constants.Constants;
 
-@Api(name = "rest", version = "v1", clientIds = { Constants.WEB_CLIENT_ID,
-		Constants.API_EXPLORER_CLIENT_ID })
+@Api(name = "rest", version = "v1", clientIds = { Constants.WEB_CLIENT_ID, Constants.API_EXPLORER_CLIENT_ID })
 public class PlacesEndpoint {
 	private PlacesSearchService searchService = new PlacesSearchService();
 
-
 	@ApiMethod(name = "getLocations", path = "locations", httpMethod = "get")
-	public Map<String,Object> getLocationsNearby(@Named("lat") Float lat, @Named("lng") Float lng)
+	public Map<String, Object> getLocationsNearby()
 			throws InternalServerErrorException, BadRequestException, NotFoundException, OAuthRequestException {
-		return searchService.getBestPlaces(lat, lng);
+		return searchService.getBestPlaces();
+	}
+
+	@ApiMethod(name = "addLocation", path = "locations", httpMethod = "post")
+	public String addLocation(@Named("lat") String lat, @Named("lng") String lng)
+			throws InternalServerErrorException, BadRequestException, IOException, GeneralSecurityException {
+		searchService.storeLocation(Double.parseDouble(lat), Double.parseDouble(lng));
+		return "Ok";
 	}
 
 }

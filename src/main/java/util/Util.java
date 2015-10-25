@@ -3,6 +3,8 @@ package util;
 import java.awt.Point;
 import java.util.List;
 
+import Model.Location;
+
 public class Util {
 
 	/**
@@ -14,17 +16,18 @@ public class Util {
 	 *            Lista de localizações.
 	 * @return Localização central calculada.
 	 */
-	public static Point getCenterPoint(List<Point> locations) {
+	public static Location getCenterPoint(List<Location> locations) {
 		double sumLatitude = 0.0;
 		double sumLongitude = 0.0;
-		for (Point location : locations) {
-			sumLatitude += location.getX();
-			sumLongitude += location.getY();
+		for (Location location : locations) {
+			sumLatitude += location.getLat();
+			sumLongitude += location.getLng();
 		}
 		double meanLatitude = sumLatitude / locations.size();
 		double meanLongitude = sumLongitude / locations.size();
-		Point centerPoint = new Point();
-		centerPoint.setLocation(meanLatitude, meanLongitude);
+		Location centerPoint = new Location();
+		centerPoint.setLat(meanLatitude);
+		centerPoint.setLng(meanLongitude);
 		return centerPoint;
 	}
 

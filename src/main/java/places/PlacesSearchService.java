@@ -21,6 +21,7 @@ import java.util.Scanner;
 
 import Model.Location;
 import persistence.OfyService;
+import util.Util;
 
 public class PlacesSearchService {
 	String appkey = "AIzaSyC0nxX2sAv1EjQndaVD9gzDb3bjJshg15o";
@@ -33,18 +34,16 @@ public class PlacesSearchService {
 		ofy.save().entity(loc).now();
 	}
 
-	public Map<String, Object> getBestPlaces(Float lat, Float lng)
+	public Map<String, Object> getBestPlaces()
 			throws NotFoundException, BadRequestException, InternalServerErrorException {
 		Objectify objectify = OfyService.ofy();
 		List<Location> entities = objectify.load().type(Location.class).list();
 		if (entities == null || entities.size() <= 0) {
 			return null;
 		}
-		//List<Poi> allResults;
-		for (Location location : entities) {
-			
-		}
-		return null;//getBestPlacesSingleLoc(lat, lng);
+		
+		Location centerLoc = Util.getCenterPoint(entities);
+		return getBestPlacesSingleLoc(centerLoc.getLat(), centerLoc.getLng());
 	}
 
 	private Map<String, Object> getBestPlacesSingleLoc(Double lat, Double lng)
@@ -52,10 +51,10 @@ public class PlacesSearchService {
 		String fullRequest = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat.toString()
 				+ "," + lng.toString() + "&radius=500&types=food&name=cruise&key=" + appkey;
 		try {
-			// InputStream resourceStream =
-			// PlacesSearchService.class.getClassLoader().getResourceAsStream("people_basic_auth.txt");
+			InputStream resourceStream =
+			PlacesSearchService.class.getClassLoader().getResourceAsStream("people_basic_auth.txt");
 
-			// String auth = convertStreamToString(resourceStream);
+			String auth = convertStreamToString(resourceStream);
 
 			URL url = new URL(fullRequest);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
