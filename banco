@@ -10,7 +10,7 @@ Create table tipo_transporte(
 Create table transporte(
 	id_transporte INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	identificação Varchar(100) NOT NULL,
-	id_tipotransporte INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	id_tipotransporte INT UNSIGNED NOT NULL,
 	Primary key (id_transporte),
 	Foreign key (id_tipotransporte) references tipo_transporte(id_tipotransporte)
 );
@@ -37,7 +37,7 @@ Create table horarios(
 	horario TIME NOT NULL,
 	id_transporte INT UNSIGNED NOT NULL,
 	id_tipodia INT UNSIGNED NOT NULL,
-	Foreign key (id_transporte)
+	Foreign key (id_transporte) references transporte(id_transporte)
 );
 
 
