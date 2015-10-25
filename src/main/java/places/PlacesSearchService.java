@@ -1,25 +1,25 @@
 package places;
 
-import com.google.api.server.spi.response.BadRequestException;
-import com.google.api.server.spi.response.InternalServerErrorException;
-import com.google.api.server.spi.response.NotFoundException;
-
-import com.googlecode.objectify.Objectify;
-import com.googlecode.objectify.ObjectifyService;
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.api.server.spi.response.BadRequestException;
+import com.google.api.server.spi.response.InternalServerErrorException;
+import com.google.api.server.spi.response.NotFoundException;
+import com.googlecode.objectify.Objectify;
+import com.googlecode.objectify.ObjectifyService;
+
 import Model.Location;
+import Model.LocationResult;
 import persistence.OfyService;
 import util.Util;
 
@@ -85,6 +85,22 @@ public class PlacesSearchService {
 	private static String convertStreamToString(InputStream is) {
 		Scanner scanner = new Scanner(is).useDelimiter("\\A");
 		return scanner.hasNext() ? scanner.next() : "";
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<LocationResult> retrieveLocationsFromBestPlacesJSON(Map<String,Object> mapaJson) {
+		List<Map<String,Object>> listaResults = (List<Map<String,Object>>) mapaJson.get("results");
+		List<LocationResult> lista = new ArrayList<LocationResult>();
+		for(Map<String,Object> result:listaResults) {
+			LocationResult atual = new LocationResult();
+			Map<String, Object> geometry = (Map<String, Object>) result.get("geometry");
+			Map<String, Object> location = (Map<String, Object>) geometry.get("location");
+			atual.setName(result.get("name").toString());
+			atual.setLat(location.get("lat").toString());
+			atual.setLng(location.get("lng").toString());
+			lista.add(atual);
+		}
+		return lista;
 	}
 
 }
