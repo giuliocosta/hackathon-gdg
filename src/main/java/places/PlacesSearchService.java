@@ -53,10 +53,10 @@ public class PlacesSearchService {
 		String fullRequest = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat.toString()
 				+ "," + lng.toString() + "&radius=500&types=food&name=cruise&key=" + appkey;
 		try {
-			InputStream resourceStream =
-			PlacesSearchService.class.getClassLoader().getResourceAsStream("people_basic_auth.txt");
+			//InputStream resourceStream =
+			//PlacesSearchService.class.getClassLoader().getResourceAsStream("people_basic_auth.txt");
 
-			String auth = convertStreamToString(resourceStream);
+			//String auth = convertStreamToString(resourceStream);
 
 			URL url = new URL(fullRequest);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
