@@ -25,10 +25,9 @@ public class PlacesEndpoint {
 	}
 
 	@ApiMethod(name = "addLocation", path = "locations", httpMethod = "post")
-	public String addLocation(@Named("lat") String lat, @Named("lng") String lng)
+	public void addLocation(@Named("lat") String lat, @Named("lng") String lng)
 			throws InternalServerErrorException, BadRequestException, IOException, GeneralSecurityException {
 		searchService.storeLocation(Double.parseDouble(lat), Double.parseDouble(lng));
-		return "Ok";
 	}
 
 }
