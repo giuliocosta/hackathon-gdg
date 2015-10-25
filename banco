@@ -1,0 +1,48 @@
+Create database hackaton;
+Use hackaton;
+
+Create table tipo_transporte(
+	id_tipotransporte INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	descricao VARCHAR(50) NOT NULL,
+	Primary key(id_tipotransporte)
+);
+
+Create table transporte(
+	id_transporte INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	identificação Varchar(100) NOT NULL,
+	id_tipotransporte INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	Primary key (id_transporte),
+	Foreign key (id_tipotransporte) references tipo_transporte(id_tipotransporte)
+);
+
+Create table itinerario(
+	id_itinerario INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	latitude DOUBLE NULL,
+	longitude DOUBLE NULL,
+	endereco Varchar(100) NULL,
+	numero_endereco INT UNSIGNED NULL,
+	id_transporte INT UNSIGNED NOT NULL,
+	Primary key (id_itinerario),
+	Foreign key (id_transporte) references itinerario(id_itinerario)
+);
+
+Create table tipo_dia(
+	id_tipodia INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	descricao_dia VARCHAR(100) NOT NULL,
+	Primary key (id_tipodia)
+);
+
+
+Create table horarios(
+	horario TIME NOT NULL,
+	id_transporte INT UNSIGNED NOT NULL,
+	id_tipodia INT UNSIGNED NOT NULL,
+	Foreign key (id_transporte)
+);
+
+
+INSERT INTO tipo_transporte Values (null, "Ônibus");
+
+INSERT INTO transporte Values (null, "2550", 1);
+
+INSERT INTO itinerario Values (null, null, null, "", null, 1);
