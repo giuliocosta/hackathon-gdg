@@ -10,6 +10,7 @@ import com.google.appengine.api.oauth.OAuthRequestException;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Map;
 
 import Model.LocationResults;
 import constants.Constants;
@@ -19,9 +20,9 @@ public class PlacesEndpoint {
 	private PlacesSearchService searchService = new PlacesSearchService();
 
 	@ApiMethod(name = "getLocations", path = "locations", httpMethod = "get")
-	public LocationResults getLocationsNearby()
+	public Map<String, Object> getLocationsNearby()
 			throws InternalServerErrorException, BadRequestException, NotFoundException, OAuthRequestException {
-		return new LocationResults(searchService.getBestPlaces());
+		return searchService.getBestPlaces();
 	}
 
 	@ApiMethod(name = "addLocation", path = "locations", httpMethod = "post")

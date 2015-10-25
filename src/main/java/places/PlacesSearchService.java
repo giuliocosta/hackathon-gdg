@@ -36,7 +36,7 @@ public class PlacesSearchService {
 		ofy.save().entity(loc).now();
 	}
 
-	public List<LocationResult> getBestPlaces()
+	public Map<String, Object> getBestPlaces()
 			throws NotFoundException, BadRequestException, InternalServerErrorException {
 		Objectify objectify = OfyService.ofy();
 		List<Location> entities = objectify.load().type(Location.class).list();
@@ -48,7 +48,7 @@ public class PlacesSearchService {
 		return getBestPlacesSingleLoc(centerLoc.getLat(), centerLoc.getLng());
 	}
 
-	private List<LocationResult> getBestPlacesSingleLoc(Double lat, Double lng)
+	private Map<String, Object> getBestPlacesSingleLoc(Double lat, Double lng)
 			throws NotFoundException, BadRequestException {
 		String fullRequest = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat.toString()
 				+ "," + lng.toString() + "&radius=500&types=food&name=cruise&key=" + appkey;
@@ -66,7 +66,8 @@ public class PlacesSearchService {
 
 			if (conn.getResponseCode() == 200) {
 				Map<String, Object> providerResponse = mapper.readValue(conn.getInputStream(), Map.class);
-				return retrieveLocationsFromBestPlacesJSON(providerResponse);
+				//return retrieveLocationsFromBestPlacesJSON(providerResponse);
+				return providerResponse;
 			} else {
 				throw new NotFoundException("operacao falhou");
 			}
